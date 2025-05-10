@@ -1,0 +1,55 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "terraform",
+
+	"dockerComposeFile": "../docker/docker-compose.yml",
+	"service": "ubuntu",
+	"workspaceFolder": "/workspace",
+
+	"initializeCommand": ["bash", "-c", "./.devcontainer/beforeBuild.sh"],
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"hashicorp.terraform",
+				"GitHub.copilot",
+				"GitHub.copilot-chat"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+
+				// この設定がないと、ターミナルセッション開始時に/etc/profile.d/配下のスクリプトが実行されなかった
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"terminal.integrated.profiles.linux": {
+					"bash": {
+						"path": "bash",
+						"icon": "terminal-bash",
+						"args": [
+							"--login"
+						]
+					}
+				},
+
+				"[terraform]": {
+        	"editor.defaultFormatter": "hashicorp.terraform"
+   			}
+			}
+		}
+	},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "terraform"
+}

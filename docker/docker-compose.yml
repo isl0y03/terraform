@@ -1,0 +1,18 @@
+services:
+  ubuntu:
+    build:
+      context: .
+      args:
+        # ホスト側のGIDとUIDを.envファイルから取得してビルド時の引数に設定
+        GID: $GID
+        UID: $UID
+    volumes:
+      # ワークスペースとホスト側のAWS認証情報をマウント
+      - ..:/workspace
+      - $HOME/.aws:/home/terraform/.aws
+    environment:
+      # Terraform用のAWS IAMロールを指定
+      ROLE_ARN: arn:aws:iam::567143828505:role/TerraformRole
+      # defaultプロファイル以外を使用している場合に設定
+      # AWS_PROFILE: profile_name
+    command: [ "tail", "-f", "/dev/null" ]
